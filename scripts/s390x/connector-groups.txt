@@ -60,8 +60,11 @@ connect-splunk-sink: Group 4
 connect-splunk-source: Group 4
 connect-salesforce-cdc-source: Group 4
 connect-salesforce-bulkapi-source: Group 4
+connect-salesforce-bulkapi-sink: Group 4
 connect-salesforce-pushtopics-source: Group 4
 connect-salesforce-sobject-sink: Group 4
+connect-salesforce-platform-events-sink: Group 4
+connect-salesforce-platform-events-source: Group 4
 connect-sftp-source: Group 4
 connect-sftp-sink: Group 4
 connect-solace-source: Group 4
