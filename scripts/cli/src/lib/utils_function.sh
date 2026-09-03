@@ -281,14 +281,10 @@ function maybe_create_image()
       then
         # Confluent has never published a CP image for s390x below 8.2, so
         # the pre-8.1 yum/tcpdump-RPM tiers that exist for arm64/x86_64 above
-        # can't apply here, and that base image already carries tcpdump via
-        # its own repos (no separate RPM download needed, unlike the older
-        # tiers). The comment this replaced assumed microdnf is always
-        # present on s390x CP 8.2+ images -- disproven on a real s390x
-        # Semaphore run (2026-09-03, cp-server-connect:8.3.x-latest-ubi9):
-        # "microdnf: command not found" (exit 127). Detect whichever of
-        # microdnf/dnf/yum is actually present instead of assuming one.
-        CONNECT_3RDPARTY_INSTALL="if [ ! -f /tmp/done ]; then PKG_MGR=\$(command -v microdnf || command -v dnf || command -v yum); \$PKG_MGR -y install bind-utils openssl unzip findutils net-tools nc jq which iptables libmnl krb5-workstation krb5-libs vim && \$PKG_MGR clean all && touch /tmp/done; fi"
+        # can't apply here -- a running s390x image guarantees CP 8.2+ and
+        # microdnf, and that base image already carries tcpdump via its own
+        # repos (no separate RPM download needed, unlike the older tiers).
+        CONNECT_3RDPARTY_INSTALL="if [ ! -f /tmp/done ]; then microdnf -y install bind-utils openssl unzip findutils net-tools nc jq which iptables libmnl krb5-workstation krb5-libs vim && microdnf clean all && touch /tmp/done; fi"
       else
         if version_gt $TAG_BASE "7.9.9"
         then
